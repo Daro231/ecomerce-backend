@@ -1,0 +1,14 @@
+target/
+.git
+.gitignore
+.idea/
+*.iml
+.vscode/
+.env
+.env.*
+uploads/
+docker-compose.yml
+http/
+postman/
+README.md
+DEPLOY.md
