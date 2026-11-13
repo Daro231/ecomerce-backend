@@ -27,7 +27,7 @@ RUN groupadd -r spring && useradd -r -g spring spring \
 USER spring:spring
 
 # Copy packaged jar from builder
-COPY --from=builder --chown=spring:spring /build/target/*.jar app.jar
+COPY --from=builder --chown=spring:spring /build/target/ecom-backend-*.jar app.jar
 
 # Railway automatically sets the PORT environment variable at runtime
 EXPOSE 8080

@@ -1,0 +1,77 @@
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+  forward-headers-strategy: framework
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:railway}}
+    username: ${DB_USERNAME:${PGUSER:postgres}}
+    password: ${DB_PASSWORD:${PGPASSWORD:}}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  upload-dir: ${UPLOAD_DIR:/app/uploads}
+  cors:
+    allowed-origins: ${FRONTEND_URL:}
+    allow-all: false
+
+payment:
+  khqr:
+    mode: ${KHQR_MODE:mock}
+    expiry-minutes: ${KHQR_EXPIRY_MINUTES:10}
+    poll-interval-ms: ${KHQR_POLL_INTERVAL_MS:5000}
+    expiry-grace-minutes: ${KHQR_EXPIRY_GRACE_MINUTES:5}
+    min-check-interval-seconds: ${KHQR_MIN_CHECK_INTERVAL_SECONDS:3}
+    auto-cancel-minutes: ${KHQR_AUTO_CANCEL_MINUTES:30}
+    auto-cancel-check-interval-ms: ${KHQR_AUTO_CANCEL_CHECK_INTERVAL_MS:60000}
+    late-payment-watch-hours: ${KHQR_LATE_PAYMENT_WATCH_HOURS:24}
+    late-payment-check-interval-ms: ${KHQR_LATE_PAYMENT_CHECK_INTERVAL_MS:60000}
+
+bakong:
+  base-url: ${BAKONG_BASE_URL:https://api-bakong.nbc.gov.kh}
+  token: ${BAKONG_TOKEN:}
+  account-id: ${BAKONG_ACCOUNT_ID:}
+  merchant-name: ${BAKONG_MERCHANT_NAME:ECOM Computer Store}
+  merchant-city: ${BAKONG_MERCHANT_CITY:Phnom Penh}
+  currency: ${BAKONG_CURRENCY:USD}
+  khr-per-usd: ${BAKONG_KHR_PER_USD:4100}
+  store-label: ${BAKONG_STORE_LABEL:ECOM}
+  terminal-label: ${BAKONG_TERMINAL_LABEL:WEB}
+  connect-timeout-ms: 5000
+  read-timeout-ms: 10000
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql: WARN
+    com.ecom: INFO

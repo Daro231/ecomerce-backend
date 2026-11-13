@@ -24,6 +24,7 @@
         <wiremock.version>3.9.1</wiremock.version>
         <!-- docker-java (Testcontainers) must speak an API version the Docker daemon accepts; Docker 29 needs >= 1.44 -->
         <docker.api.version>1.44</docker.api.version>
+        <flyway.version>10.20.0</flyway.version>
     </properties>
 
     <dependencies>

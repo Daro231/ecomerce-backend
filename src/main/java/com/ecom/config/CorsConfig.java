@@ -13,7 +13,7 @@ import java.util.List;
 public class CorsConfig {
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(@Value("${app.cors.allowed-origins}") List<String> origins,
+    public CorsConfigurationSource corsConfigurationSource(@Value("${app.cors.allowed-origins:}") List<String> origins,
                                                            @Value("${app.cors.allow-all:false}") boolean allowAll) {
         CorsConfiguration config = new CorsConfiguration();
         if (allowAll) {
@@ -21,9 +21,12 @@ public class CorsConfig {
         } else {
             List<String> sanitizedOrigins = origins.stream()
                     .map(String::trim)
+                    .map(s -> s.replaceAll("/+$", ""))
                     .filter(s -> !s.isEmpty())
                     .toList();
-            config.setAllowedOrigins(sanitizedOrigins);
+            if (!sanitizedOrigins.isEmpty()) {
+                config.setAllowedOrigins(sanitizedOrigins);
+            }
         }
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

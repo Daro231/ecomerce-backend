@@ -32,7 +32,7 @@ When you add the PostgreSQL plugin in the same Railway project, Railway automati
   ```env
   SPRING_PROFILES_ACTIVE=prod
   ```
-  The production profile (`application-prod.properties`) automatically maps:
+  The production profile (`application-prod.yml`) automatically maps:
   `jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}` with `${PGUSER}` and `${PGPASSWORD}`.
 - Alternatively, you can explicitly set `DB_URL` using Railway's reference syntax:
   ```env
